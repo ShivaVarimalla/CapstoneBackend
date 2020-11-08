@@ -75,3 +75,17 @@ exports.getAllUsers = async (req,res)=>{
 		})
 	}
 }
+exports.myProfile = async (req,res)=>{
+	try {
+	let response = await User.findOne({id:user.id});
+	res.status(200).json({
+	message:'My Profile',
+	body:response
+	})
+	} catch(e) {
+	console.log(e);
+	res.json({
+	message:'some error occured!..'
+	})
+	}
+	} 
