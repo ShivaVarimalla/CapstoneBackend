@@ -39,8 +39,8 @@ io.on('connect', (socket) => {
 
 	    socket.join(user.room);
 
-	    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});
-	    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
+	    socket.emit('message', { user: 'admin', _id: socket.id, text: `${user.name}, welcome to room ${user.room}.`});
+	    socket.broadcast.to(user.room).emit('message', { user: 'admin', _id: 0, text: `${user.name} has joined!` });
 
 	    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
@@ -58,7 +58,7 @@ io.on('connect', (socket) => {
 
 		newMessage.save();
 
-		io.to(user.room).emit('message', { user: user.name, text: message });
+		io.to(user.room).emit('message', { user: user.name, text: message, _id: user.id});
 
 		callback();
 	});
@@ -67,7 +67,7 @@ io.on('connect', (socket) => {
     const user = removeUser(socket.id);
 
     if(user) {
-      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+      io.to(user.room).emit('message', { user: 'Admin',id: 0, text: `${user.name} has left.` });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
     }
   })
