@@ -21,7 +21,7 @@ app.use('/messages',require('./routes/message.route'));
 //connecting to database
 (async ()=>{
 	try {
-		await mongoose.connect(`mongodb+srv://Shiva:Shiva@cluster0.bh870.mongodb.net/cluster0?retryWrites=true&w=majority`);
+		await mongoose.connect(process.env.Databaseurl,{ useUnifiedTopology: true });
 		console.log('connected to database!...');
 	} catch(e) {
 		console.log(e);
