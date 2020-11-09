@@ -58,7 +58,7 @@ io.on('connect', (socket) => {
 
 		newMessage.save();
 
-		io.to(user.room).emit('message', { user: user.name, text: message, _id: user.id});
+		io.to(user.room).emit('message', { user: user.name, text: message, _id: user.id, id: newMessage._id});
 
 		callback();
 	});
